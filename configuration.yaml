@@ -3,7 +3,7 @@ rest:
     resource: https://ws.dvienergi.com/API/
     method: POST
     scan_interval: 60
-    payload: '{"usermail": "YOUR@EMAIL.COM",	"userpassword": "YOURPASSWORD",	"fabnr":YOURFABNR,	"get":{"bestgreen":0,"sensor":1,"relay":0,"timer":0,"userSettings":1}}'
+    payload: '{"usermail": "your_mail",	"userpassword": "your_pswd",	"fabnr":your_fab_no,	"get":{"bestgreen":0,"sensor":1,"relay":1,"timer":0,"userSettings":1}}'
     sensor:
       - name: "Dvi Heatpump Sensors"
         json_attributes_path: $.output.sensor
@@ -52,108 +52,109 @@ rest:
 
 template:
   - sensor:
-      - name: "Heatpump Power consumption"
-        unit_of_measurement: "kW"
-        device_class: power
-        state_class: measurement
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Powermeter.kW') }}"
-  - sensor:
-      - name: "Heatpump Power meter"
-        unit_of_measurement: "kWh"
-        device_class: energy
-        state_class: total_increasing
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Powermeter.kWh') }}"
-  - sensor:
-      - name: "Heatpump Outside temp"
-        unit_of_measurement: "°C"
-        device_class: temperature
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Outsidetemperature') }}"
-        icon: "mdi:tree"
-  - sensor:
-      - name: "Heatpump CV forward"
-        device_class: temperature
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Centralheating.Forward') }}"
-        unit_of_measurement: "°C"
-  - sensor:
-      - name: "Heatpump CV return"
-        device_class: temperature
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Centralheating.Return') }}"
-        unit_of_measurement: "°C"
-  - sensor:
-      - name: "Heatpump storage tank"
-        device_class: temperature
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Storagetank.Centralheating') }}"
-        unit_of_measurement: "°C"
-  - sensor:
-      - name: "Heatpump Hotwater"
-        device_class: temperature
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Storagetank.Hotwater') }}"
-        unit_of_measurement: "°C"
-        icon: "mdi:water-pump"
-  - sensor:
-      - name: "Heatpump CV Curve"
-        state: "{{ state_attr('sensor.dvi_heatpump_settings','Centralheat.Curve') }}"
-  - sensor:
-      - name: "Heatpump CV CurveTemp"
-        device_class: temperature
-        unit_of_measurement: "°C"
-        state: "{{ state_attr('sensor.dvi_heatpump_settings','Centralheat.CurveTemp') }}"
-  - sensor:
-      - name: "Heatpump Hotwater Target"
-        device_class: temperature
-        unit_of_measurement: "°C"
-        state: "{{ state_attr('sensor.dvi_heatpump_settings','Hotwater.Temp') }}"
+    - name: "Heatpump Power consumption"
+      unit_of_measurement: "kW"
+      device_class: power    
+      state_class: measurement
+      state: "{{ state_attr('sensor.dvi_heatpump_sensors','Powermeter.kW') }}"
+
+    - name: "Heatpump Power meter"
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      state: "{{ state_attr('sensor.dvi_heatpump_sensors','Powermeter.kWh') }}"
+   
+    - name: "Heatpump Outside temp"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state: "{{ state_attr('sensor.dvi_heatpump_sensors','Outsidetemperature') }}"
+      icon: "mdi:tree"
+
+    - name: "Heatpump CV forward"
+      device_class: temperature
+      state: "{{ state_attr('sensor.dvi_heatpump_sensors','Centralheating.Forward') }}"
+      unit_of_measurement: "°C"
+
+    - name: "Heatpump CV return"
+      device_class: temperature
+      state: "{{ state_attr('sensor.dvi_heatpump_sensors','Centralheating.Return') }}"
+      unit_of_measurement: "°C"
+      
+    - name: "Heatpump storage tank"
+      device_class: temperature
+      state: "{{ state_attr('sensor.dvi_heatpump_sensors','Storagetank.Centralheating') }}"
+      unit_of_measurement: "°C"
+
+    - name: "Heatpump Hotwater"
+      device_class: temperature
+      state: "{{ state_attr('sensor.dvi_heatpump_sensors','Storagetank.Hotwater') }}"
+      unit_of_measurement: "°C"
+      icon: "mdi:water-pump"
+
+    - name: "Heatpump CV Curve"
+      state: "{{ state_attr('sensor.dvi_heatpump_settings','Centralheat.Curve') }}"
+
+    - name: "Heatpump CV CurveTemp"
+      device_class: temperature
+      unit_of_measurement: "°C"
+      state: "{{ state_attr('sensor.dvi_heatpump_settings','Centralheat.CurveTemp') }}"
+
+    - name: "Heatpump Hotwater Target"
+      device_class: temperature
+      unit_of_measurement: "°C"
+      state: "{{ state_attr('sensor.dvi_heatpump_settings','Hotwater.Temp') }}"
+      
   - binary_sensor:
-      - name: "Heatpump Hotwater on"
-        state: "{{ state_attr('sensor.dvi_heatpump_settings','Hotwater.State') }}"
-  - binary_sensor:
-      - name: "Heatpump CV on"
-        state: "{{ state_attr('sensor.dvi_heatpump_settings','Centralheat.State') }}"
-  - binary_sensor:
-      - name: "Heatpump 4-vejs magnetventil for afrimning"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay1') }}"
-  - binary_sensor:
-      - name: "Heatpump Magnetventil for væskeindsprøjtning"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay2') }}"
-  - binary_sensor:
-      - name: "Heatpump 3-vejs shuntventil for centralvarme Åbne"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay3') }}"
-  - binary_sensor:
-      - name: "Heatpump 3-vejs shuntventil for centralvarme Lukke"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay4') }}"
-  - binary_sensor:
-      - name: "Heatpump Cirkulationspumpe centralvarme"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay5') }}"
-  - binary_sensor:
-      - name: "Heatpump Cirkulationspumpe solvarme"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay6') }}"
-  - binary_sensor:
-      - name: "Heatpump Sumalarm for fejl"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay7') }}"
-  - binary_sensor:
-      - name: "Heatpump 24 Ukendt"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay8') }}"
-  - binary_sensor:
-      - name: "Heatpump Softstarter for kompressor"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay9') }}"
-  - binary_sensor:
-      - name: "Heatpump 3-vejs motorventil for VV prioritering"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay10') }}"
-  - binary_sensor:
-      - name: "Heatpump GND "
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay11') }}"
-  - binary_sensor:
-      - name: "Heatpump 100 Relæ for el-patron"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay12') }}"
-  - binary_sensor:
-      - name: "Heatpump Cirkulationspumpe varm side"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay13') }}"
-  - binary_sensor:
-      - name: "Heatpump CV Evt. el-trasing af CV eller/og afløb"
-        state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay14') }}"
-  - binary_sensor:
-      - name: "Heatpump Kører"
-        state: "{{ state_attr('sensor.dvi_heatpump_sensors','Powermeter.kW') | float > 1 }}"
-  - binary_sensor:
-      - name: "Heatpump Hotwater Timer"
-        state: "{{ state_attr('sensor.dvi_heatpump_settings','Hotwater.Clock')}}"
+    - name: "Heatpump Hotwater on"
+      state: "{{ state_attr('sensor.dvi_heatpump_settings','Hotwater.State') }}"
+
+    - name: "Heatpump CV on"
+      state: "{{ state_attr('sensor.dvi_heatpump_settings','Centralheat.State') }}"
+
+    - name: "Heatpump 4-vejs magnetventil for afrimning"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay1') }}"
+
+    - name: "Heatpump Magnetventil for væskeindsprøjtning"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay2') }}"
+
+    - name: "Heatpump 3-vejs shuntventil for centralvarme Åbne"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay3') }}"
+
+    - name: "Heatpump 3-vejs shuntventil for centralvarme Lukke"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay4') }}"
+      
+    - name: "Heatpump Cirkulationspumpe centralvarme"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay5') }}"
+
+    - name: "Heatpump Cirkulationspumpe solvarme"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay6') }}"
+
+    - name: "Heatpump Sumalarm for fejl"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay7') }}"
+
+    - name: "Heatpump 24 Ukendt"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay8') }}"
+
+    - name: "Heatpump Softstarter for kompressor"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay9') }}"
+
+    - name: "Heatpump 3-vejs motorventil for VV prioritering"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay10') }}"
+
+    - name: "Heatpump GND "
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay11') }}"
+
+    - name: "Heatpump 100 Relæ for el-patron"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay12') }}"
+
+    - name: "Heatpump Cirkulationspumpe varm side"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay13') }}"
+
+    - name: "Heatpump CV Evt. el-trasing af CV eller/og afløb"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay14') }}"
+
+    - name: "Heatpump Kører"
+      state: "{{ state_attr('sensor.dvi_heatpump_relays','Relay9') }}"
+      
+    - name: "Heatpump Hotwater Timer"
+      state: "{{ state_attr('sensor.dvi_heatpump_settings','Hotwater.Clock')}}"
