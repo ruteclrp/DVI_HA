@@ -1,0 +1,113 @@
+type: picture-elements
+title: DVI LV12 Compact varmepumpe
+image: /local/images/dvi.gif?v=2
+style:
+  hight: 50%
+  Width: 50%
+elements:
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.heatpump_cv_on
+        state: 'on'
+    elements:
+      - type: image
+        image: /local/images/CV_on.gif
+        style:
+          top: 78%
+          left: 89%
+          width: 21%
+      - type: image
+        image: /local/images/CVflow_on.gif
+        style:
+          top: 88.9%
+          left: 71.8%
+          width: 14.2%
+      - type: state-label
+        entity: sensor.dvi_heatpump_sensors
+        attribute: Centralheating.Forward
+        suffix: °
+        style:
+          top: 80%
+          left: 72%
+          font-size: 100%
+      - type: state-label
+        entity: sensor.dvi_heatpump_sensors
+        attribute: Centralheating.Return
+        suffix: °
+        style:
+          top: 93%
+          left: 67%
+          font-size: 100%
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.heatpump_korer
+        state: 'on'
+    elements:
+      - type: image
+        image: /local/images/HP_on.gif
+        style:
+          top: 62.7%
+          left: 18.4%
+          width: 33.9%
+      - type: image
+        image: /local/images/COMP_on.gif
+        style:
+          top: 62.75%
+          left: 46%
+          width: 21.3%
+      - type: state-label
+        entity: sensor.dvi_heatpump_sensors
+        attribute: LV.Evaporator1
+        suffix: °
+        style:
+          top: 77%
+          left: 16%
+          font-size: 100%
+      - type: state-label
+        entity: sensor.dvi_heatpump_sensors
+        attribute: Highpressure
+        suffix: °
+        style:
+          top: 43%
+          left: 46%
+          font-size: 100%
+      - type: state-label
+        entity: sensor.dvi_heatpump_sensors
+        attribute: Lowpressure
+        suffix: °
+        style:
+          top: 43%
+          left: 32%
+          font-size: 100%
+  - type: state-label
+    entity: sensor.dvi_heatpump_sensors
+    attribute: Outsidetemperature
+    suffix: °
+    style:
+      top: 13%
+      left: 13%
+      font-size: 100%
+  - type: state-label
+    entity: sensor.dvi_heatpump_sensors
+    attribute: Sensor.Date
+    prefix: Last update
+    style:
+      top: 0%
+      left: 55%
+      font-size: 100%
+  - type: state-label
+    entity: sensor.dvi_heatpump_sensors
+    attribute: Storagetank.Centralheating
+    suffix: °
+    style:
+      top: 70%
+      left: 61%
+      font-size: 100%
+  - type: state-label
+    entity: sensor.dvi_heatpump_sensors
+    attribute: Storagetank.Hotwater
+    suffix: °
+    style:
+      top: 33%
+      left: 86%
+      font-size: 100%
